@@ -1,11 +1,11 @@
-export interface TareasInterface{
+export interface ItareasInterface{
     id: number,
     tittle: string,
     description: string,
     completed: boolean
 }
 
-export class Tarea implements TareasInterface{
+export class Tarea implements ItareasInterface{
     public id : number
     public tittle: string
     public description: string

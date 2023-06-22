@@ -1,14 +1,14 @@
 import * as dataJson from '../infrastructure/data.json';
-import { TareasInterface, Tarea } from '../domain/claseTareas';
+import { ItareasInterface, Tarea } from '../domain/claseTareas';
 import {Request,Response,NextFunction} from 'express';
 
-const getAllTasks = (req: Request,res: Response) => {
+const getAllTasks = (_req: Request,res: Response) => {
 	res.json(dataJson.tasks);
 };
 
 const getTask = (req:Request, res:Response) => {
     const id: number = Number(req.params.id);
-	const task: TareasInterface | undefined = dataJson.tasks.find((tarea: TareasInterface) => tarea.id === id);
+	const task: ItareasInterface | undefined = dataJson.tasks.find((tarea: ItareasInterface) => tarea.id === id);
 
 	if (!task) {
         return res.status(404).send('Task not found')
@@ -18,8 +18,8 @@ const getTask = (req:Request, res:Response) => {
 };
 
 const createdTask = (req:Request, res:Response) => {
-    const newTask: TareasInterface = new Tarea(dataJson.tasks.length + 1,req.body.tittle,req.body.description,req.body.completed); 
-	
+    const newTask: ItareasInterface = new Tarea(dataJson.tasks.length + 1,req.body.tittle,req.body.description,req.body.completed); 
+	console.log(req.body);
     dataJson.tasks.push(newTask);
     res.status(201).json(newTask);
 };
@@ -32,7 +32,7 @@ const updateTask = (req:Request,res:Response) => {
 		return res.status(404).send('Task not found');
 	};
 
-    const updateTarea: TareasInterface = {
+    const updateTarea: ItareasInterface = {
 		id: dataJson.tasks[index].id,
 		tittle: dataJson.tasks[index].tittle,
 		description: dataJson.tasks[index].description,

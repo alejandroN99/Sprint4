@@ -1,4 +1,4 @@
-import { TareasInterface, Tarea } from "../../src/backend/domain/claseTareas";
+import { Tarea } from "../../src/backend/domain/claseTareas";
 import * as dataJson from "../../src/backend/infrastructure/data.json";
 
 describe('Class Tareas', () => {

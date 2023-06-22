@@ -10,7 +10,7 @@ describe('GET/tasks', () => {
 
     test('should response with a status 200 and return array with tasks ', async () => {
         const response = await request(app)
-        .get("/task/all")
+        .get("/task")
         .set('Authorization', 'Basic ' + Buffer.from('user:password').toString('base64'))
     
         expect(response.statusCode).toBe(200);
@@ -48,7 +48,7 @@ describe('POST/tasks',() => {
     test('should create a new task successfully', async () => {
         const newTask: Tarea = new Tarea(4,'Escribir codigo','Escribir funcion tareas',false);
         const response = await request(app)
-        .post("/task/post")
+        .post("/task")
         .set('Authorization', 'Basic ' + Buffer.from('user:password').toString('base64'))
         .send(newTask);
 
@@ -64,7 +64,7 @@ describe('UPDATE/tasks', () => {
         }
 
         const response = await request(app)
-        .put("/task/put/3")
+        .put("/task/3")
         .set('Authorization', 'Basic ' + Buffer.from('user:password').toString('base64'))
         .send(taskUpdate);
 
@@ -82,7 +82,7 @@ describe('UPDATE/tasks', () => {
         }
 
         const response = await request(app)
-        .put("/task/put/7")
+        .put("/task/7")
         .set('Authorization', 'Basic ' + Buffer.from('user:password').toString('base64'))
         .send(taskUpdate);
 
@@ -95,7 +95,7 @@ describe('UPDATE/tasks', () => {
 describe('DELETE/tasks', () => {
     test('should delete an existing task successfully', async () => {
         const response = await request(app)
-        .delete("/task/delete/1")
+        .delete("/task/1")
         .set('Authorization', 'Basic ' + Buffer.from('user:password').toString('base64'))
 
         expect(response.status).toBe(200);
@@ -111,7 +111,7 @@ describe('DELETE/tasks', () => {
 
     test('should return a 404 status code if the task ID does not exist', async () => {
         const response = await request(app)
-        .delete('/task/delete/9')
+        .delete('/task/9')
         .set('Authorization', 'Basic ' + Buffer.from('user:password').toString('base64'));
 
         expect(response.status).toBe(404);

@@ -3,12 +3,12 @@ export const router = express.Router();
 import { getAllTasks,getTask,createdTask,updateTask,deleteTask } from './controllers';
 
 
-router.get('/all', getAllTasks);
+router.get('/task', getAllTasks);
 
-router.get('/:id', getTask);
+router.get('/task/:id', getTask);
 
-router.post('/post', createdTask);
+router.post('/task', createdTask);
 
-router.put('/put/:id', updateTask);
+router.put('/task/:id', updateTask);
 
-router.delete('/delete/:id', deleteTask);
+router.delete('/task/:id', deleteTask);

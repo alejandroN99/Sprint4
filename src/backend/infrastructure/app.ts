@@ -11,6 +11,6 @@ export const server = app.listen(80, () => {
 });
 
 app.use(express.json());
-app.use('/task',[middleware1,middleware2,basicAuth]);
-app.use('/task', router);
+app.use('',[middleware1,middleware2,basicAuth]);
+app.use('', router);
 
