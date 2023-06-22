@@ -1,19 +1,13 @@
-# 🦋 TypeScript TDD Template
+# TODO API REST
 
-⚡ Start your Node.js project with Typescript using Test Driven Development (TDD) practices.
-
-### 📋 GitHub Actions Workflow:
-
-[![🏠 Build](https://github.com/AraManjon/typescript-tdd-template/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/AraManjon/typescript-tdd-template/actions/workflows/build.yml)
-
-This GitHub Actions workflow automatically builds and tests the application when code changes are pushed to the master branch or a pull request targeting the master branch is opened or synchronized.
+I will create a server using Express.js, to serve the REST API of the task list (TODO-LIST), applying the hexagonal architecture.
 
 ### 📥 Installation
 
 To get started with this template, you first need to clone the repository:
 
 ```bash
-git clone https://github.com/AraManjon/typescript-tdd-template.git
+git clone https://github.com/alejandroN99/Sprint4.git
 ```
 
 Then, install the project dependencies:
@@ -28,7 +22,7 @@ To start the server in development mode, run the following script:
 ```bash
 npm run dev
 ```
-Then, open http://localhost:8000 to access the server.
+Then, open http://localhost:80 to access the server.
 
 
 ### 🚀 Production
@@ -47,95 +41,193 @@ Then, start the server by running:
 npm start
 ```
 
-This will start the server and make it available at http://localhost:8000.
+This will start the server and make it available at http://localhost:80.
 
+## Índice
 
-### 🏗️ Scripts
-This project comes with several predefined scripts in the package.json file:
+- [Rutas](#rutas)
+- [Parámetros comunes](#parámetros-comunes)
+- [Respuestas comunes](#respuestas-comunes)
 
-```test```: Runs tests using Jest.
+## Rutas
 
-```lint```: Runs ESLint to check code quality.
+### GET /task/all
 
-```lint:fix```: Runs ESLint to fix code style issues.
+Recupera todas las tareas disponibles.
 
-```dev```: Starts the development server with ts-node-dev and allows debugging
+#### Parámetros de consulta
 
-```build```: Removes the ./dist folder and compiles the TypeScript code into JavaScript in the ./dist folder.
+Ninguno.
 
-```start```: Starts the server in production using the compiled files in the dist/ folder.
+#### Respuesta exitosa
 
-### 📝 Dependencies
+Código de estado: 200 OK
 
-- cors: middleware for handling Cross-Origin Resource Sharing (CORS)
+```json
+{
+    "tasks": [
+        {
+            "id": 1,
+            "tittle": "Limpiar",
+            "description": "Limpiar la cocina",
+            "completed": true
+        },
+        {
+            "id": 2,
+            "tittle": "Cocinar",
+            "description": "Hacer la cena",
+            "completed": true
+        },
+        {
+            "id": 3,
+            "tittle": "Estudiar",
+            "description": "Entregar sprint 7",
+            "completed": false
+        }
+    ]
+}
+```
+### GET /task/:id
 
-- dotenv: loads environment variables from a .env file
+Recupera una tarea por su id.
 
-- express: web framework for Node.js
+#### Parámetros de consulta
 
-- express-promise-router: promise-based router for Express
+El id, ejemplo: 1.
 
-- helmet: middleware for adding security headers
+#### Respuesta exitosa
 
-- mongodb: driver for MongoDB
+Código de estado: 200 OK
 
-- mysql2: MySQL client for Node.js
-
-### 🛠️ Dev Dependencies
-
-- @types/cors: TypeScript definitions for cors
-
-- @types/express: TypeScript definitions for express
-
-- @types/jest: TypeScript definitions for jest
-
-- @types/mysql: TypeScript definitions for mysql
-
-- eslint: linter for TypeScript
-
-- eslint-config-codely: ESLint configuration used by CodelyTV
-
-- mysql: MySQL driver for Node.js
-
-- rimraf: cross-platform tool for removing files and directories
-
-- ts-jest: TypeScript preprocessor for Jest
-
-- ts-node-dev: TypeScript execution and development environment for Node.js
-
-- tsc-watch: TypeScript compiler with file watching
-
-### 🗂️ Folder structure
-
-In this folder structure, the code is organized according to the principles of Hexagonal Architecture. 
+```json
+  
+  {
+    "id": 1,
+    "tittle": "Limpiar",
+    "description": "Limpiar la cocina",
+    "completed": true
+  }
 
 ```
-src/
-├── backend
-│   ├── middlewares
-│   ├── App.ts
-│   ├── server.start.ts
-│   └── Server.ts
-├── shared
-│   ├── utils
-│   ├── domain
-│   └── infrastructure
-│       ├── config
-│       └── persistence
-└── user
-    ├── application
-    │   ├── services
-    │   └── use-cases
-    ├── domain
-    │   ├── entities
-    │   └── repositories
-    └── infrastructure
-        ├── controllers
-        ├── repositories
-        ├── routes
-        ├── services
-        └── UserModule.ts
+#### Respuesta de error
+
+Código de estado: 404 Not Found
+
+Mensaje: Task not found
+
+---
+
+### POST /task/post
+
+Crea una nueva tarea.
+
+#### Parámetros de cuerpo
+
+| Nombre      | Tipo   | Requerido | Descripción                      |
+|-------------|--------|-----------|----------------------------------|
+| tittle      | string | Sí        | Título de la tarea               |
+| description | string | Sí        | Detalles adicionales de la tarea |
+| completed   | boolean| Sí        | true/false                       |
+
+#### Respuesta exitosa
+
+Código de estado: 201 Created
+
+```json
+{
+  "title": "Nueva tarea",
+  "description": "Creando tarea de ejemplo",
+  "completed": false
+}
+```
+### PUT /task/put/:id
+
+Modifica una tarea, para marcar como completada o no.
+
+#### Parámetros de consulta
+
+El id, ejemplo: 3.
+
+Y le enviamos en el cuerpo de la consulta:
+```json
+{
+    "completed": true
+}
 ```
 
+#### Respuesta exitosa
 
+Código de estado: 200 OK
 
+```json
+  
+  {
+      "id": 3,
+      "tittle": "Estudiar",
+      "description": "Entregar sprint 7",
+      "completed": true
+
+  }
+```
+#### Respuesta de error
+
+Código de estado: 404 Not Found
+
+Mensaje: Task not found
+
+---
+### DELETE /task/delete/:id
+
+Elimina una tarea.
+
+#### Parámetros de consulta
+
+El id, ejemplo: 2.
+
+#### Respuesta exitosa
+
+Código de estado: 200 OK
+
+Mensaje: 'Task deleted'
+
+```json
+  [
+        {
+            "id": 1,
+            "tittle": "Limpiar",
+            "description": "Limpiar la cocina",
+            "completed": true
+        },
+        {
+            "id": 3,
+            "tittle": "Estudiar",
+            "description": "Entregar sprint 7",
+            "completed": false
+        }
+    ]
+```
+#### Respuesta de error
+
+Código de estado: 404 Not Found
+
+Mensaje: Task not found
+
+---
+
+## Parámetros comunes
+
+### Encabezados de autorización
+
+Algunas rutas requieren autenticación básica mediante encabezados de autorización. Para enviar los encabezados de autorización, utiliza el formato "Basic base64(username:password)".
+
+## Respuestas comunes
+
+### Códigos de estado
+
+- 200 OK: La solicitud se procesó correctamente.
+- 201 Created: Se creó un nuevo recurso.
+- 400 Bad Request: La solicitud contiene datos incorrectos o faltantes.
+- 401 Unauthorized: La solicitud no está autenticada o las credenciales son incorrectas.
+- 404 Not Found: El recurso solicitado no se encontró.
+
+---

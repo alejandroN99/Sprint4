@@ -1,0 +1,22 @@
+{
+    "tasks": [
+        {
+            "id": 1,
+            "tittle": "Limpiar",
+            "description": "Limpiar la cocina",
+            "completed": true
+        },
+        {
+            "id": 2,
+            "tittle": "Cocinar",
+            "description": "Hacer la cena",
+            "completed": true
+        },
+        {
+            "id": 3,
+            "tittle": "Estudiar",
+            "description": "Entregar sprint 7",
+            "completed": false
+        }
+    ]
+}
